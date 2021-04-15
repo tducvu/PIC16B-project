@@ -40,7 +40,7 @@ Racial bias could happen if the resources data set is not diverse enough, too fo
 
 **Tentative timeline**<br>
 Week 3: Create repository <br>
-Week 3: Web scraping for train/test data set of 1,000,000 <br>
+Week 3: Web scraping for train/test data set of 1,000,000 photos<br>
 Week 4: Data Exploratory (understand color distribution, understanding Tensorflow and Open CV)<br>
 Week 5: Model selection based on exploratory hypothesis.<br>
 Week 6: Create a tested model (at least have an out image - no need to be accurate about color yet)<br>
