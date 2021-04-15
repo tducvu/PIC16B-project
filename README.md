@@ -2,5 +2,5 @@
 
 Tic Tac Toe <br>
 O    .     .<br>
-.    .     . <br>
+.    X     . <br>
 X    .     . <br>
