@@ -3,4 +3,4 @@
 Tic Tac Toe <br>
 O    .     .<br>
 .    X     . <br>
-X    .     . <br>
+X    .     X <br>
