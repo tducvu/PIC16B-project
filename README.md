@@ -38,7 +38,7 @@ Diversity in the data set would again be a real hurdle here as it’s challengin
 Racial bias could happen if the resources data set is not diverse enough, too focus on training a certain race/ethnicity for example. Need to check the database. 
 
 
-**Tentative timeline**
+**Tentative timeline**<br>
 Week 3: Create repository <br>
 Week 3: Web scraping for train/test data set of 1,000,000 <br>
 Week 4: Data Exploratory (understand color distribution, understanding Tensorflow and Open CV)<br>
