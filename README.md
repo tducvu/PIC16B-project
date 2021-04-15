@@ -5,6 +5,7 @@ O    O     O <br>
 .    X     . <br>
 X    .     X <br>
 
+Alice: testing clone ver 2
 
 ## Project Proposal:
 
