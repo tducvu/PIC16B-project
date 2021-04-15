@@ -39,13 +39,13 @@ Racial bias could happen if the resources data set is not diverse enough, too fo
 
 
 **Tentative timeline**
-Week 3: Create repository
-Week 3: Web scraping for train/test data set of 1,000,000
-Week 4: Data Exploratory (understand color distribution, understanding Tensorflow and Open CV)
-Week 5: Model selection based on exploratory hypothesis.
-Week 6: Create a tested model (at least have an out image - no need to be accurate about color yet)
-Week 7: Turn in draft model
-Week 8: Explore either Web app or python package, refined model
-Week 9: tbd
+Week 3: Create repository <br>
+Week 3: Web scraping for train/test data set of 1,000,000 <br>
+Week 4: Data Exploratory (understand color distribution, understanding Tensorflow and Open CV)<br>
+Week 5: Model selection based on exploratory hypothesis.<br>
+Week 6: Create a tested model (at least have an out image - no need to be accurate about color yet)<br>
+Week 7: Turn in draft model<br>
+Week 8: Explore either Web app or python package, refined model<br>
+Week 9: tbd <br>
 Week 10: Final Project due
 
