@@ -2,7 +2,7 @@
 
 ## Project Proposal:
 
-**Abstract**
+**Abstract:**
 Colorization has a variety of applications in recreational and historical context. It transforms how we see and perceive photos which provides an immense value in helping us visualize and convey stories, emotion, as well as history. In this project, we will be implementing a deep neural network model on a huge data set which then will be used to colorize black and white photos. In short, what we will be planning to do in the next couple of weeks is we will scrape data using ``scrapy``, analyze and prepare the data, train them on a deep neural network deployed through TensorFlow and use ``OpenCv`` for image processing. Our ultimate goal for this project is to construct a web app that has a basic API which allows user to easily use and interact with.
 
 **Planned Deliverables:**
