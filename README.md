@@ -39,3 +39,6 @@ Diversity in the data set would also be a real hurdle here as it is challenging 
 - [ ] Week 8: Refine model
 - [ ] Week 9: Explore whether to purse Web App or Python package
 - [ ] Week 10: Final Project due
+
+**TOOL ACTUALLY USE IN PROJECT:**
+* Getting data and downloading to local folder: selenium, requests, io, os, PIL, hashlib
