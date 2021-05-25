@@ -27,18 +27,3 @@ Data would be from web scraping on google image (keyword: portrait, nature, hist
 **Ethics:**
 It is definitely essential to consult expert's advice on historical photos since the model may distort history as we don't have enough data from the past to train on.
 Diversity in the data set would also be a real hurdle here as it is challenging to have an accurate portrayal of people’s skin color based solely on their physical appearance which leads to the unwanted racial biases in machine learning. It could happen if the data set is not diverse enough, i.e., there is too much focus on a certain race/ethnicity. One of the way to mitigate this effect is certainly to diversify our sources of data as much as we possibly can.
-
-
-**Tentative timeline**
-- [x] Week 3: Create repository
-- [ ] Week 3: Web scraping for train/test data set of approximately 1,000,000 photos
-- [ ] Week 4: Data Exploratory (understand color distribution, understanding Tensorflow and OpenCV)
-- [ ] Week 5: Model selection based on exploratory hypothesis
-- [ ] Week 6: Create a tested model (at least have an output image - no need to be accurate about color yet)
-- [ ] Week 7: Turn in a draft model
-- [ ] Week 8: Refine model
-- [ ] Week 9: Explore whether to purse Web App or Python package
-- [ ] Week 10: Final Project due
-
-**TOOL ACTUALLY USE IN PROJECT:**
-* Getting data and downloading to local folder: selenium, requests, io, os, PIL, hashlib
