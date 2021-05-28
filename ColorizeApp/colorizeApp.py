@@ -5,7 +5,8 @@ Type in cmd > streamlit run colorizeApp.py
 """
 
 import streamlit as st
-from load_css import local_css
+from load_css import local_scss
+from model import colorize_model
 
 import tensorflow as tf 
 import keras
@@ -16,110 +17,91 @@ from PIL import Image
 import cv2
 import time
 
-from keras.models import load_model
-from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
-from skimage.color import rgb2lab, lab2rgb, rgb2gray, gray2rgb
-from keras.applications.inception_resnet_v2 import preprocess_input
-from skimage.transform import resize
-from keras.applications.inception_resnet_v2 import InceptionResNetV2
 
-# st.set_page_config(page_icon=":art:", page_title="Image Colorization")
+st.page_icon=":art:"
+st.page_title="Image Colorization"
 
 
 
-st.markdown("<h1 style='text-align: center;'> <span class='highlight blue'>Image Colorization</span></h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center;'> PIC 16B Group Project</h3>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>IMAGE COLORIZATION</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center;'> using TensorFlow</h3>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center;'> PIC 16B Group Project</h3>", unsafe_allow_html=True)
 
 
-
-st.markdown("<div><span class = 'bold'>Upload grayscale images:</span></div>", unsafe_allow_html=True)
-
-
-
-
-
-# st.sidebar.title('1. Choose an image from 10 gray images')
+####################################################
 # choice = st.sidebar.number_input(label = 'Enter a value: ', min_value=1, value=1, step=1)
+about = '''
+### Abstract
+
+>`Colorization` has a variety of applications in recreational and historical context. 
+It transforms how we see and perceive photos which provides an immense value in helping us visualize and convey stories, emotion, as well as history. 
+Our project scraped data using `selenium`
+analyze and prepare the data, train them on a deep neural network deployed through `TensorFlow`,
+and use `OpenCv` for image processing.
+
+<div style='text-align: right;'>Alice Pham & Duc Vu</div>
+'''
+
+st.sidebar.markdown(about, unsafe_allow_html=True)
+
+####################################################
 
 
 
 
-# Uploading the File to the Page
-uploadFile = st.file_uploader(label="Upload image", type=['jpg', 'png'])
+md = '''
+Start colorization with some Black & White images. You can upload an image or choose a pre-existed test images to try out the colorization
+'''
+st.markdown(md)
 
-# Function to Read and Manupilate Images
-def load_image(img):
-    im = Image.open(img)
-    gray = np.array(im)
-    return gray
+st.markdown("### Upload a B&W Picture:")
+# Uploading File to Page: Choose your own GRAY picture to colorize
+uploadFile = st.file_uploader(label="Upload Gray Image: ", type=['jpg', 'png', 'jpeg'])
 
 
 # Checking the Format of the page
 if uploadFile is not None:
-    # Perform your Manupilations (In my Case applying Filters)
-    gray = load_image(uploadFile)
+    # Read and Load Image as np.array
+    img = Image.open(uploadFile)
+    gray = np.array(img)
+    
     st.image(gray)
-    st.write("Image Uploaded Successfully")
     
     start_analyze_file=st.button('Colorize')
-    
     
     if start_analyze_file == True:
 
         with st.spinner(text = 'Colorizing...'):
             time.sleep(5)
 
+        colorize_model(gray)
 
-        
-        #Load weights
-        inception = InceptionResNetV2(weights='imagenet', include_top=True)
-        inception.graph = tf.get_default_graph()
+###################################################3
+
+# If not upload, choose an image in our test images:
+st.markdown("### Choose a B&W Picture from our small collection:")
 
 
-        def create_inception_embedding(grayscaled_rgb):
-            grayscaled_rgb_resized = []
-            for i in grayscaled_rgb:
-                i = resize(i, (299, 299, 3), mode='constant')
-                grayscaled_rgb_resized.append(i)
-            grayscaled_rgb_resized = np.array(grayscaled_rgb_resized)
-            grayscaled_rgb_resized = preprocess_input(grayscaled_rgb_resized)
-            with inception.graph.as_default():
-                embed = inception.predict(grayscaled_rgb_resized)
-            return embed
+img_folder = "C:\\Users\\Alice\\Documents\\GitHub\\PIC16B-project\\colorizer\\Test"
 
-        st.cache(allow_output_mutation = True)
+def load_img_from_folder(folder):
+    imgs = []
+    for filename in os.listdir(folder):
+        img = cv2.imread(os.path.join(folder,filename))
+        if img is not None: imgs.append(img)
+    return imgs
 
-        color_me = img_to_array(gray)
-        color_me = np.array(color_me, dtype=float)
-        gray_me = gray2rgb(rgb2gray(1.0/255*color_me))
-        color_me_embed = create_inception_embedding(gray_me)
-        color_me = rgb2lab(1.0/255*color_me)[:,:,:,0]
-        color_me = color_me.reshape(color_me.shape+(1,))
-        # gray_me = gray2rgb(rgb2gray(1.0/255*color_me))
-        
-        # color_me = rgb2lab(1.0/255*color_me)[:,:,:,0]
-        # color_me = color_me.reshape(color_me.shape+(1,)) 
+images = load_img_from_folder(img_folder)
+st.image([img for img in images])
 
-        
-        model = tf.keras.models.load_model("C:\\Users\\Alice\\Documents\\GitHub\\PIC16B-project\\model.hdf5")
-        model.run_eagerly = False
-        model.call = tf.function(model.call)
-        
-        output = model.predict([color_me, color_me_embed])
-        output = output * 128
 
-        # Output colorizations
-        cur = np.zeros((256, 256, 3))
-        cur[:,:,0] = color_me[:,:,0]
-        cur[:,:,1:] = output
-        
-        
-        st.image(lab2rgb(cur).astype('uint8'), clamp=True)
-        st.success('DONE!')
+i = st.number_input(label="Choose a test picture number:", min_value=1, value=1, step=1)
+gray2 = images[i-1]
 
-# else:
-#     st.write("Make sure you image is in JPG/PNG Format.")
+start_analyze_test_file=st.button('Colorize')
 
+if start_analyze_test_file == True:
+    colorize_model(gray2)
 
 
 
