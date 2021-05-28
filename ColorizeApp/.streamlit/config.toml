@@ -33,8 +33,7 @@ caching = true
 # Default: true
 displayEnabled = true
 
-# Controls whether uncaught app exceptions are displayed in the browser. By default, this is set to True and Streamlit displays app exceptions and associated tracebacks in 
-the browser.
+# Controls whether uncaught app exceptions are displayed in the browser. By default, this is set to True and Streamlit displays app exceptions and associated tracebacks in the browser.
 # If set to False, an exception will result in a generic message being shown in the browser, and exceptions and tracebacks will be printed to the console only.
 # Default: true
 showErrorDetails = true
@@ -113,8 +112,7 @@ enableWebsocketCompression = true
 
 [browser]
 
-# Internet address where users should point their browsers in order to connect to the 
-app. Can be IP address or DNS name and path.
+# Internet address where users should point their browsers in order to connect to the app. Can be IP address or DNS name and path.
 # This is used to: - Set the correct URL for CORS and XSRF protection purposes. - Show the URL on the terminal - Open the browser - Tell the browser where to connect to the server when in liveSave mode.
 # Default: 'localhost'
 serverAddress = "localhost"
@@ -131,8 +129,7 @@ serverPort = 8501
 
 [mapbox]
 
-# Configure Streamlit to use a custom Mapbox token for elements like st.pydeck_chart and st.map. To get a token for yourself, create an account at https://mapbox.com. It's 
-free (for moderate usage levels)!
+# Configure Streamlit to use a custom Mapbox token for elements like st.pydeck_chart and st.map. To get a token for yourself, create an account at https://mapbox.com. It's free (for moderate usage levels)!
 # Default: ""
 token = ""
 
@@ -186,7 +183,7 @@ keyPrefix = ""
 [theme]
 
 # The preset Streamlit theme that your custom theme inherits from. One of "light" or "dark".
-# The value below was set in C:\Users\Alice\Documents\GitHub\PIC16B-project\ColorizeApp\.streamlit\config.toml
+# The value below was set in \.streamlit\config.toml
 base = "dark"
 
 # Primary accent color for interactive elements.
@@ -199,8 +196,11 @@ base = "dark"
 #secondaryBackgroundColor =
 
 # Color used for almost all text.
-# The value below was set in C:\Users\Alice\Documents\GitHub\PIC16B-project\ColorizeApp\.streamlit\config.toml
+# The value below was set in \.streamlit\config.toml
 textColor = "#fff3f3"
 
 # Font family for all text in the app, except code blocks. One of "sans serif", "serif", or "monospace".
 #font =
+
+
+
