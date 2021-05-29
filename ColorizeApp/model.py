@@ -19,7 +19,7 @@ from keras.applications.inception_resnet_v2 import InceptionResNetV2
 def colorize_model(gray):
     #Load weights
     inception = InceptionResNetV2(weights='imagenet', include_top=True)
-    inception.graph = tf.compat.v1.get_default_graph()
+    inception.graph = tf.get_default_graph()
 
     def create_inception_embedding(grayscaled_rgb):
         grayscaled_rgb_resized = []
@@ -46,7 +46,7 @@ def colorize_model(gray):
     # color_me = color_me.reshape(color_me.shape+(1,)) 
 
 
-    model = tf.keras.models.load_model("C:\\Users\\Alice\\Documents\\GitHub\\PIC16B-project\\model.hdf5")
+    model = tf.keras.models.load_model("/home/blackbox/Documents/UCLA/PIC-Python/PIC16B/PIC16B-project/modelv2.hdf5")
     model.run_eagerly = False
     model.call = tf.function(model.call)
 
