@@ -10,16 +10,15 @@ from serving import (
         load_model,
         evaluate_input,
 )
-#from model import colorize_model
 import numpy as np
 import os
 import base64
 from io import BytesIO
-import PIL
 from PIL import Image
 import cv2
 import time
 
+# basic UI of the app
 st.page_icon=":art:"
 st.page_title="Image Colorization"
 
@@ -72,14 +71,16 @@ if uploadFile is not None:
 
     if start_analyze_file == True:
         with st.spinner(text = 'Colorizing...'):
+            load_model()
             input_buffer = BytesIO()
             output_buffer = BytesIO()
-            img.save(input_buffer, 'PNG')
+            img.save(input_buffer, 'JPEG')
             input_img = evaluate_input(input_buffer)
-            input_img.save(output_buffer, format='JPG')
-            output_img = base64.b64encode(output_buffer.getvalue())
+            input_img.save(output_buffer, format='JPEG')
+            output_img = Image.open(output_buffer)
             color = np.array(output_img)
             st.image(color)
+            st.success("Done!")
 
 ###################################################3
 
@@ -110,4 +111,14 @@ gray2 = images[i-1]
 start_analyze_test_file = st.button('Colorize', key='2')
 
 if start_analyze_test_file == True:
-    colorize_model(gray2)
+    with st.spinner(text = 'Colorizing...'):
+        load_model()
+        input_buffer = BytesIO()
+        output_buffer = BytesIO()
+        gray2.save(input_buffer, 'JPEG')
+        input_img = evaluate_input(input_buffer)
+        input_img.save(output_buffer, format='JPEG')
+        output_img = Image.open(output_buffer)
+        color = np.array(output_img)
+        st.image(color)
+        st.success("Done!")
