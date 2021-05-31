@@ -11,24 +11,7 @@
 /* BASE RULES */
 /**************/
 
-.highlight {
-  border-radius: 0.4rem;
-  color: white;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-}
 
-.bold {
-  padding-left: 1rem;
-  font-weight: 700;
-}
-.blue {
-  background-color: RGB(50,50,50);
-  color: #80CBC4;
-}
-.red {
-  background-color: lightcoral;
-}
 
 
 html {
@@ -131,15 +114,6 @@ strong, b {
 }
 
 
-// Fixes images in popup boxes from Google Translate
-.gmnoprint img {
-  max-width: none;
-}
-
-.date {
-  font-style: italic;
-  color: $gray;
-}
 
 // Specify the color of the selection
 ::-moz-selection {
@@ -184,145 +158,6 @@ strong, b {
   }
 }
 
-.site-avatar {
-  float: left;
-  width: 70px;
-  height: 70px;
-  margin-right: 15px;
-  
-
-  @include mobile {
-    float: none;
-    display: block;
-    margin: 0 auto;
-  }
-
-  img {
-    border-radius: 5px;
-    background: None;
-  }
-}
-
-.site-info {
-  float: left;
-
-  @include mobile {
-    float: none;
-    display: block;
-    margin: 0 auto;
-  }
-}
-
-.site-name {
-  margin: 0;
-  color: rgba(255, 83, 112, 1);
-  cursor: pointer;
-  font-family: 'lato', sans-serif;
-  font-weight: 300;
-  font-size: 30px;
-  letter-spacing: 1px;
-}
-
-.site-description {
-  margin: -5px 0 0 0;
-  color: $lightGray;
-  font-size: 16px;
-
-  @include mobile {
-    margin: 3px 0;
-  }
-}
-
-nav {
-  float: right;
-  margin-top: 23px; // @TODO: Vertically middle align
-  font-family: $helveticaNeue;
-  font-size: 18px;
-
-  @include mobile {
-    float: none;
-    margin-top: 9px;
-    display: block;
-    font-size: 16px;
-  }
-
-  a {
-    margin-left: 20px;
-    color: $gray;
-    text-align: right;
-    font-weight: 300;
-    letter-spacing: 1px;
-
-    @include mobile {
-      margin: 0 10px;
-      color: #0000FF;
-    }
-  }
-}
-
-
-.posts > .post {
-  padding-bottom: 2em;
-  border-bottom: 1px solid rgb(77, 77, 77);
-}
-
-.posts > .post:last-child {
-  padding-bottom: 1em;
-  border-bottom: none;
-}
-
-.post {
-  blockquote {
-    margin: 1.8em .8em;
-    border-left: 2px solid $lightGray;
-    padding: 0.1em 1em;
-    color: $lightGray;
-    font-size: 18px;
-    font-style: italic;
-  }
-
-  .comments {
-    margin-top: 10px;
-  }
-
-  .read-more {
-    text-transform: uppercase;
-    font-size: 15px;
-  }
-}
-
-.wrapper-footer {
-  margin-top: 50px;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  background-color: lightgray;
-}
-
-footer {
-  padding: 20px 0;
-  text-align: center;
-}
-
-.got-help {
-  border-radius: 20px;
-  border: 5px solid #00BFFF;
-  background-color: $baby-blue-30;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.gave-help {
-  border-radius: 20px;
-  border: 5px solid $peach-quartz;
-  background-color: $peach-quartz-30;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
 
 
 // trying something here:
@@ -349,55 +184,6 @@ body::-webkit-scrollbar-thumb {
   border-radius: 6px;
   border: 3px solid var(--scrollbarBG);
 }
-
-
-
-// table for dataframe
-table.dataframe {
-  width: 100%;
-  height: 240px;
-  display: block;
-  overflow: auto;
-  font-family: inherit;
-  font-size: 12px;
-  line-height: 20px;
-  text-align: center;
-}
-table.dataframe th {
-font-weight: bold;
-padding: 4px;
-}
-table.dataframe td {
-padding: 4px;
-}
-table.dataframe tr:hover {
-background: #0000FF; 
-}
-
-// scrollbar for dataframe
-table.dataframe::-webkit-scrollbar {
-  height: 11px;
-  width: 11px;
-  // border: 1px solid $black
-}
-table.dataframe::-webkit-scrollbar-track {
-  background: var(--scrollbarBG);
-}
-table.dataframe::-webkit-scrollbar-thumb {
-  background-color: var(--thumbBG) ;
-  border-radius: 6px;
-  border: 3px solid var(--scrollbarBG);
-}
-
-
-// table border: table, th, td
-table{
-  color: lightgray
-}
-tbody tr {
-  border-top: 1pt solid #bedee2
-}
-
 
 
 /* Code in text */
