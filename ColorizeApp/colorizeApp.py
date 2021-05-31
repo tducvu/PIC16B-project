@@ -12,11 +12,10 @@ from serving import (
 )
 import numpy as np
 import os
-import base64
 from io import BytesIO
 from PIL import Image
 import cv2
-import time
+from sys import platform
 
 # basic UI of the app
 st.page_icon=":art:"
@@ -88,11 +87,10 @@ if uploadFile is not None:
 st.markdown("### Choose a B&W Picture from our small collection:")
 
 
-# Alice's Folder
-img_folder = "C:\\Users\\Alice\\Documents\\GitHub\\PIC16B-project\\colorizer\\Test"
-
-# Duc's Folder
-# img_folder = "/home/blackbox/Documents/UCLA/PIC-Python/PIC16B/PIC16B-project/colorizer/Test"
+if platform == "Win32":
+    img_folder = "..\colorizer\Test"
+else:
+    img_folder = "../colorizer/Test"
 
 def load_img_from_folder(folder):
     imgs = []
@@ -112,7 +110,7 @@ i = st.number_input(label="Choose a test picture number:", min_value=1, step=1)
 img2 = Image.open(image_paths[i-1])
 if i: st.image(np.array(img2))
 
-start_analyze_test_file = st.button('Test Colorize', key='2')
+start_analyze_test_file = st.button('Colorize', key='2')
 
 if start_analyze_test_file == True:
     with st.spinner(text = 'Colorizing...'):
