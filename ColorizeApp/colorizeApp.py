@@ -107,22 +107,25 @@ def load_img_from_folder(folder):
 image_paths, images = load_img_from_folder(img_folder)
 st.image([img for img in images])
 
-i = st.number_input(label="Choose a test picture number:", min_value=1, step=1)
+# i = st.number_input(label="Choose a test picture number:", min_value=1, value=None, step=1)
+i = st.text_input(label='Enter a tester number: ')
+if i:
+    i = int(i)
 
-img2 = Image.open(image_paths[i-1])
-if i: st.image(np.array(img2))
+    img2 = Image.open(image_paths[i-1])
+    st.image(np.array(img2))
 
-start_analyze_test_file = st.button('Test Colorize', key='2')
+    start_analyze_test_file = st.button('Test Colorize', key='2')
 
-if start_analyze_test_file == True:
-    with st.spinner(text = 'Colorizing...'):
-        load_model()
-        input_buffer = BytesIO()
-        output_buffer = BytesIO()
-        img2.save(input_buffer, 'JPEG')
-        input_img = evaluate_input(input_buffer)
-        input_img.save(output_buffer, format='JPEG')
-        output_img = Image.open(output_buffer)
-        color = np.array(output_img)
-        st.image(color)
-        st.success("Done!")
+    if start_analyze_test_file == True:
+        with st.spinner(text = 'Colorizing...'):
+            load_model()
+            input_buffer = BytesIO()
+            output_buffer = BytesIO()
+            img2.save(input_buffer, 'JPEG')
+            input_img = evaluate_input(input_buffer)
+            input_img.save(output_buffer, format='JPEG')
+            output_img = Image.open(output_buffer)
+            color = np.array(output_img)
+            st.image(color)
+            st.success("Done!")
