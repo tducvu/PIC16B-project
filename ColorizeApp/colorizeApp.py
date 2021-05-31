@@ -89,33 +89,37 @@ st.markdown("### Choose a B&W Picture from our small collection:")
 
 
 # Alice's Folder
-#img_folder = "C:\\Users\\Alice\\Documents\\GitHub\\PIC16B-project\\colorizer\\Test"
+img_folder = "C:\\Users\\Alice\\Documents\\GitHub\\PIC16B-project\\colorizer\\Test"
 
 # Duc's Folder
-img_folder = "/home/blackbox/Documents/UCLA/PIC-Python/PIC16B/PIC16B-project/colorizer/Test"
+# img_folder = "/home/blackbox/Documents/UCLA/PIC-Python/PIC16B/PIC16B-project/colorizer/Test"
 
 def load_img_from_folder(folder):
     imgs = []
+    imgs_path = []
     for filename in os.listdir(folder):
         img = cv2.imread(os.path.join(folder,filename))
         if img is not None: imgs.append(img)
-    return imgs
+        imgs_path.append(os.path.join(folder,filename))
+    return imgs_path, imgs
+    
 
-images = load_img_from_folder(img_folder)
+image_paths, images = load_img_from_folder(img_folder)
 st.image([img for img in images])
 
+i = st.number_input(label="Choose a test picture number:", min_value=1, step=1)
 
-i = st.number_input(label="Choose a test picture number:", min_value=1, value=1, step=1)
-gray2 = images[i-1]
+img2 = Image.open(image_paths[i-1])
+if i: st.image(np.array(img2))
 
-start_analyze_test_file = st.button('Colorize', key='2')
+start_analyze_test_file = st.button('Test Colorize', key='2')
 
 if start_analyze_test_file == True:
     with st.spinner(text = 'Colorizing...'):
         load_model()
         input_buffer = BytesIO()
         output_buffer = BytesIO()
-        gray2.save(input_buffer, 'JPEG')
+        img2.save(input_buffer, 'JPEG')
         input_img = evaluate_input(input_buffer)
         input_img.save(output_buffer, format='JPEG')
         output_img = Image.open(output_buffer)
