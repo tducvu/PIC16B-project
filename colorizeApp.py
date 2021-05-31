@@ -14,7 +14,8 @@ import numpy as np
 import os
 from io import BytesIO
 from PIL import Image
-import cv2
+# import cv2
+from cv2 import cv2
 from sys import platform
 
 # basic UI of the app
