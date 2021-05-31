@@ -7,8 +7,10 @@ from support import (
     create_inception_embedding,
 )
 
-INCEPTION_PATH = '../models/inception_resnet_v2_weights_tf_dim_ordering_tf_kernels.h5'
-MODEL_PATH = '../models/color_tensorflow_ds_small_115.h5'
+# INCEPTION_PATH = '../models/inception_resnet_v2_weights_tf_dim_ordering_tf_kernels.h5'
+# MODEL_PATH = '../models/color_tensorflow_ds_small_115.h5'
+INCEPTION_PATH = './models/inception_resnet_v2_weights_tf_dim_ordering_tf_kernels.h5'
+MODEL_PATH = './models/color_tensorflow_ds_small_115.h5'
 
 ALLOWED_EXTENSIONS = set(['jpg', 'png', 'jpeg'])
 
