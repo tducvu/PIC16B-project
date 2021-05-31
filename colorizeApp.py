@@ -86,11 +86,9 @@ st.markdown("### Choose a B&W Picture from our small collection:")
 
 
 if platform == "Win32":
-    # img_folder = "..\colorizer\Test"
-    img_folder = ".\colorizer\Test"
+    img_folder = "colorizer\Test"
 else:
-    # img_folder = "../colorizer/Test"
-    img_folder = "./colorizer/Test"
+    img_folder = "colorizer/Test"
 
 def load_img_from_folder(folder):
     imgs = []
