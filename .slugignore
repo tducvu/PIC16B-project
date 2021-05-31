@@ -1,2 +1,4 @@
 models/color_tensorflow_ds_big_10.h5
 models/color_tensorflow_ds_medium_50.h5
+colorizer/
+Data/
