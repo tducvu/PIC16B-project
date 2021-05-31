@@ -1,5 +1,5 @@
 tensorflow==1.9.0
 keras==2.2.0
-opencv==3.4.0
-skimage==0.14.2
+opencv-python==3.4.0.14
+scikit-image==0.14.2
 streamlit==0.82.0
