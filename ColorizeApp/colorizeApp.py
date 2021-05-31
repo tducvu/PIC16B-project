@@ -105,10 +105,11 @@ def load_img_from_folder(folder):
 image_paths, images = load_img_from_folder(img_folder)
 st.image([img for img in images])
 
-# i = st.number_input(label="Choose a test picture number:", min_value=1, value=None, step=1)
-i = st.text_input(label='Enter a tester number: ')
+# i = st.number_input(label="Choose a test picture number:", min_value=1, value=1, step=1)
+i = st.text_input(label='Enter a tester number (from 1 to 10): ')
 if i:
-    i = int(i)
+    try: i = int(i)
+    except ValueError: print("Try an integer number from 1-10")
 
     img2 = Image.open(image_paths[i-1])
     st.image(np.array(img2))
