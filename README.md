@@ -1,29 +1,73 @@
 # PIC16B Project - Colorization of Black and White Photos
 
-## Project Proposal:
+#### The main requirement file/ folder for the project:
 
-**Abstract:**
-Colorization has a variety of applications in recreational and historical context. It transforms how we see and perceive photos which provides an immense value in helping us visualize and convey stories, emotion, as well as history. In this project, we will be implementing a deep neural network model on a huge data set which then will be used to colorize black and white photos. In short, what we will be planning to do in the next couple of weeks is we will scrape data using ``scrapy``, analyze and prepare the data, train them on a deep neural network deployed through TensorFlow and use ``OpenCv`` for image processing. Our ultimate goal for this project is to construct a web app that has a basic API which allows user to easily use and interact with.
+| File/Folder      | Description |
+|---------------- | ----------- |
+| models           | Pretrained models to run colorization|
+|support.py        | contains `create_inception_embedding`, and `load_pretrained_model()` function, support for **serving.py** file|
+| serving.py       | contains `load_model()`, `evaluate_input()`, and `_data_preprocessing` function, serves main **colorizeApp.py** file|
+| requirements.txt | The required libraries with version to run file colorizeApp.py|
+| .streamlit      | folder that contains hidden config.toml of streamlit, the config can be show using `$streamlit config show`|
+| Colorizer      | contain **Test** folder with tester B&W images for the app |
 
-**Planned Deliverables:**
-The final goal is to create an interactive web app which allows users to input in any B&W photo, and output its corresponding predicted colorized version. The program is focused on reducing racial bias and accurately predicting historical photos, recreating lively colorized scenes and portraits. 
-If timing is not supported for web application, our second option is to create a Python package that will accept any gray-scale photos (jpg, jpng, png, from url link, or even gif) and output a precise colorized photo.
 
-**Resources Required:**
-Since we are looking at image, Google is the best relatively random image with reduced choosing bias and data bias.
-Data would be from web scraping on google image (keyword: portrait, nature, historical site,... ), convert to gray-scale using ``matplotlib`` as train/test data, test final model on B&W historical photos.
 
-**Tools/Skills Required:**
-- ``scrapy`` (Web Scrapping)
-- ``tensorflow`` (Machine Learning)
-- ``kera`` (Machine Learning - if applicable)
-- ``OpenCv`` (Computer vision)
-- ``sql`` (Database)
 
-**Risks:**
-- Need a huge and diverse data set
-- Computational speed/power (CPU)
+#### Extra file for styling:
 
-**Ethics:**
-It is definitely essential to consult expert's advice on historical photos since the model may distort history as we don't have enough data from the past to train on.
-Diversity in the data set would also be a real hurdle here as it is challenging to have an accurate portrayal of people’s skin color based solely on their physical appearance which leads to the unwanted racial biases in machine learning. It could happen if the data set is not diverse enough, i.e., there is too much focus on a certain race/ethnicity. One of the way to mitigate this effect is certainly to diversify our sources of data as much as we possibly can.
+| File/Folder | Description |
+|-------------|-------------|
+|style.scss   | added scss style for streamlit app|
+|load_css.py  | function `local_scss()` load scss to markdown in `st.markdown()`, to be called in colorizeApp.py|
+
+
+#### File to assist deploying streamlit app to heroku:
+
+| File/Folder | Description |
+|-------------|-------------|
+| runtime.txt       | The required version of Python = 3.6.13|
+| setup.sh | setup port for heroku using `config.toml` from **.streamlit** folder|
+| Procfile | heroku special file indicate `web: sh setup.sh && streamlit run colorizeApp.py`|
+| Aptfile | contains support file for openCV library need for deploy|
+| .slugignore | reduce app size by ignore unecessary file in repository|
+
+
+
+
+
+
+
+## Tutorial for colorization:
+First of all, fork this repository :) <br>
+
+Since we use an older version of Python and of some libraries, you will need to create another environment. Suggesting download Conda starting from the very beginning ([conda docs](https://conda.io/projects/conda/en/latest/user-guide/getting-started.html))
+
+After having conda in path, let's get start!
+
+1. Create new environment that host these libraries with Python version 3.6, activate it and install packages as requirements.txt indicate:
+``` 
+$ conda create -n colorizer python 3.6
+$ conda activate colorizer
+$ conda install --file requirements.txt
+```
+
+2. Go to the repository folder, and run the streamlit command:
+```
+$ streamlit run colorizeApp.py
+
+```
+
+
+3. Done, you can play around with the local app, add some B&W picture and see some color!
+The streamlit contains 2 method of colorization: upload your own B&W pictures, or use the 10 tester images that we provide in the app. Any case, the localhost app may run slow due to loading heavy pretrained model.
+
+
+## Limitation
+Since we can only train at most on 10,000 images and little epochs number due to lack of a strong processing core, the colorization images does not work perfectly and not as sharp as we want it to be (but, it can make your B&W pictures looks very artistic-ish :D ). 
+
+The **colorizer** folder contains the colorizer.ipynb file, which include explanation and our code with convolutional neural network training process.
+There is a choice to retrain the model with a stronger GPU if you want to for a better colorization model.
+
+
+Moreover, currently, due to the heavy model and long runtime to colorize, the option to deploy to heroku app is unavailable and it's not the best choice to upload a data science project. In the future, we can research more about methods to deploy the web app with a better colorization model.
