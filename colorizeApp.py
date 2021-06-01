@@ -5,7 +5,7 @@ Type in cmd > streamlit run colorizeApp.py
 """
 
 import streamlit as st
-# from load_css import local_scss
+from load_css import local_scss
 from serving import load_model, evaluate_input
 import numpy as np
 import os
