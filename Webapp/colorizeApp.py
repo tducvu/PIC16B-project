@@ -82,9 +82,9 @@ st.markdown("### Choose an image:")
 
 # Make sure path structure is appropriate for different OS
 if platform == "Win32":
-    img_folder = "colorizer\Test"
+    img_folder = "../Colorizer\Test"
 else:
-    img_folder = "colorizer/Test"
+    img_folder = "../Colorizer/Test"
 
 def load_img_from_folder(folder):
     """

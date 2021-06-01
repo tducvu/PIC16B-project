@@ -1,3 +1,4 @@
+# import necessary packages for CNN and image preprocessing
 import numpy as np
 
 from keras.applications.inception_resnet_v2 import InceptionResNetV2
@@ -21,8 +22,8 @@ from skimage.io import imsave
 import tensorflow as tf
 
 
-# Create embedding
 def create_inception_embedding(inception, grayscaled_rgb):
+    # Create embedding
     grayscaled_rgb_resized = []
     for i in grayscaled_rgb:
         i = resize(i, (299, 299, 3), mode='constant', anti_aliasing=True)
@@ -35,6 +36,7 @@ def create_inception_embedding(inception, grayscaled_rgb):
 
 
 def load_pretrained_model(inception_wpath, colornet_wpath):
+    """Load and return pre-trained model and the InceptionResNet model"""
 
     print('Loading pre-trained model...')
 
@@ -43,7 +45,6 @@ def load_pretrained_model(inception_wpath, colornet_wpath):
     inception.load_weights(inception_wpath)
     inception.graph = tf.get_default_graph()
 
-    # The Model
     def conv_stack(data, filters, s):
         """Utility for building conv layer"""
         output = Conv2D(filters, (3, 3), strides=s, activation='relu', padding='same')(data)

@@ -26,8 +26,8 @@ def create_inception_embedding(inception, grayscaled_rgb):
     return embed
 
 
-# Use matplotlib to show the result image 
 def show_img(im, figsize=None, ax=None):
+    """Use matplotlib to display the result image"""
     if not ax:
         fig, ax = plt.subplots(figsize=figsize)
     ax.imshow(im)
@@ -58,7 +58,7 @@ def color_result(PATH, START, END, RESULT, model, inception):
             color_me.append(img_to_array(load_img(os.path.join(PATH, filename))))
         i += 1
 
-    #Preprocessing from RGB to B&W and embedding
+    # Preprocessing from RGB to B&W and embedding
     color_me = np.array(color_me, dtype=float)
     color_me_embed = create_inception_embedding(inception, gray2rgb(rgb2gray(1.0/255*color_me)))
     color_me = rgb2lab(1.0/255*color_me)[:, :, :, 0]

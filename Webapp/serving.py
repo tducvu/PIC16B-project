@@ -7,8 +7,8 @@ from support import (
     create_inception_embedding,
 )
 
-INCEPTION_PATH = 'models/inception_resnet_v2_weights_tf_dim_ordering_tf_kernels.h5'
-MODEL_PATH = 'models/color_tensorflow_ds_small_115.h5'
+INCEPTION_PATH = '../Models/inception_resnet_v2_weights_tf_dim_ordering_tf_kernels.h5'
+MODEL_PATH = '../Models/color_tensorflow_ds_small_115.h5'
 
 ALLOWED_EXTENSIONS = set(['jpg', 'png', 'jpeg'])
 
@@ -25,6 +25,10 @@ def load_model():
 
 
 def evaluate_input(input: str):
+    """
+    Preprocessing input image and return the predicted
+    colorized version of the image with the pre-trained model
+    """
     global model
     (color_me, color_me_embed) = _data_preprocessing(input)
     output = model.predict([color_me, color_me_embed])
@@ -41,17 +45,18 @@ def evaluate_input(input: str):
 
 
 def _data_preprocessing(input_filepath):
-    """From RGB image to L(grayscale)"""
+    """
+    Preprocess image from RGB image to L(greyscale)
+    using scikit-images tools.
+    """
     global inception
 
+    # load image and convert it to array
     img = image.load_img(input_filepath, target_size=(256, 256))
     img = image.img_to_array(img)
     color_me = [img]
 
-    #################
-    # Preprocessing #
-    #################
-    # From RGB to B&W and embedding
+    # Preprocessing from RGB to B&W and embedding
     color_me = np.array(color_me, dtype=float)
     color_me_embed = create_inception_embedding(inception, gray2rgb(rgb2gray(1.0/255*color_me)))
     color_me = rgb2lab(1.0/255*color_me)[:, :, :, 0]
