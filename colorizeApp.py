@@ -5,11 +5,8 @@ Type in cmd > streamlit run colorizeApp.py
 """
 
 import streamlit as st
-from load_css import local_scss
-from serving import (
-        load_model,
-        evaluate_input,
-)
+# from load_css import local_scss
+from serving import load_model, evaluate_input
 import numpy as np
 import os
 from io import BytesIO
@@ -26,14 +23,12 @@ st.markdown("<h4 style='text-align: center;'> PIC16B Group Project</h3>", unsafe
 
 
 ####################################################
-# choice = st.sidebar.number_input(label = 'Enter a value: ', min_value=1, value=1, step=1)
 about = '''
 ### Abstract
 
 >`Colorization` has a variety of applications in recreational and historical context. 
 It transforms how we see and perceive photos which provides an immense value in helping us visualize and convey stories, emotion, as well as history. 
-Our project scraped data using `selenium`
-analyze and prepare the data, train them on a deep neural network deployed through `TensorFlow`,
+Our project was prepared and analyzed on 10,000 images, train them on a deep neural network deployed through `TensorFlow`,
 and use `OpenCv` for image processing.
 
 <div style='text-align: right;'>Alice Pham & Duc Vu</div>
