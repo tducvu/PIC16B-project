@@ -1,7 +1,7 @@
-# Streamlit App for the colorization
+# This is the basic outline define the Streamlit App for the colorization
 """
-Run the app by installing streamlit using pip
-Type in cmd > streamlit run colorizeApp.py
+To run the app, install streamlit first with either pip or conda.
+Then, in the same folder with this file, run $ streamlit run colorizeApp.py
 """
 
 import streamlit as st
@@ -13,23 +13,25 @@ from io import BytesIO
 from PIL import Image
 from sys import platform
 
-# basic UI of the app
+# UI of the app
+
+# Title
 st.page_title="Image Colorization"
 
 
 st.markdown("<h1 style='text-align: center;'>Image Colorization</h1>", unsafe_allow_html=True)
-st.markdown("<h2 style='text-align: center;'> with TensorFlow</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center;'> with TensorFlow & Keras</h2>", unsafe_allow_html=True)
 st.markdown("<h4 style='text-align: center;'> PIC16B Group Project</h3>", unsafe_allow_html=True)
 
 
-####################################################
+# Sidebar Abstract
 about = '''
 ### Abstract
 
 >`Colorization` has a variety of applications in recreational and historical context. 
-It transforms how we see and perceive photos which provides an immense value in helping us visualize and convey stories, emotion, as well as history. 
-Our project was prepared and analyzed on 10,000 images, train them on a deep neural network deployed through `TensorFlow`,
-and use `OpenCv` for image processing.
+It transforms how we see and perceive photos which provides immense value in helping us visualize and convey stories, emotion, as well as history. 
+Our project was prepared and trained on approximately 10,000 images; specifically, we
+implemented a convolutional neural network combined with a classifier deployed through `TensorFlow` and `Keras`.
 
 <div style='text-align: right;'>Alice Pham & Duc Vu</div>
 '''
@@ -40,20 +42,19 @@ st.sidebar.markdown(about, unsafe_allow_html=True)
 
 
 
-
+# App use
 md = '''
-Start colorization with some Black & White images. You can upload an image or choose a pre-existed test images to try out the colorization
+Start colorization with some greyscale images. You can upload an image or choose a
+pre-existed one from the below collection.
 '''
 st.markdown(md)
 
+# Upload image
 st.markdown("### Upload a B&W Picture:")
-# Uploading File to Page: Choose your own GRAY picture to colorize
-uploadFile = st.file_uploader(label="Upload Gray Image: ", type=['jpg', 'png', 'jpeg'])
+uploadFile = st.file_uploader(label="Upload Greyscale Image: ", type=['jpg', 'png', 'jpeg'])
 
-
-# Checking the Format of the page
 if uploadFile is not None:
-    # Read and Load Image as np.array
+    # read and load image as a numpy array
     img = Image.open(uploadFile)
     gray = np.array(img)
     st.image(gray)
@@ -62,6 +63,7 @@ if uploadFile is not None:
 
     if start_analyze_file == True:
         with st.spinner(text = 'Colorizing...'):
+            # load model, save image for processing, evaluate it and display the result
             load_model()
             input_buffer = BytesIO()
             output_buffer = BytesIO()
@@ -73,18 +75,22 @@ if uploadFile is not None:
             st.image(color)
             st.success("Done!")
 
-###################################################3
+###################################################
 
 # If not upload, choose an image in our test images:
-st.markdown("### Choose a B&W Picture from our small collection:")
+st.markdown("### Choose an image:")
 
-
+# Make sure path structure is appropriate for different OS
 if platform == "Win32":
-    img_folder = "colorizer\Test"
+    img_folder = "../Colorizer\Test"
 else:
-    img_folder = "colorizer/Test"
+    img_folder = "../Colorizer/Test"
 
 def load_img_from_folder(folder):
+    """
+    Load images from a folder and return those images in a list
+    and their corresponding path
+    """
     imgs = []
     imgs_path = []
     for filename in os.listdir(folder):
@@ -93,15 +99,16 @@ def load_img_from_folder(folder):
         imgs_path.append(os.path.join(folder,filename))
     return imgs_path, imgs
     
-
+# Display images for testing
 image_paths, images = load_img_from_folder(img_folder)
 st.image([img for img in images])
 
-# i = st.number_input(label="Choose a test picture number:", min_value=1, value=1, step=1)
-i = st.text_input(label='Enter a tester number (from 1 to 10): ')
+i = st.text_input(label='Enter a tester number (from 1 to 8): ')
 if i:
-    try: i = int(i)
-    except ValueError: print("Try an integer number from 1-10")
+    try:
+        i = int(i)
+    except IndexError:
+        print("Try an integer number from 1-8")
 
     img2 = Image.open(image_paths[i-1])
     st.image(np.array(img2))
