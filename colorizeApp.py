@@ -14,8 +14,6 @@ import numpy as np
 import os
 from io import BytesIO
 from PIL import Image
-import cv2
-from sys import platform
 
 # basic UI of the app
 st.page_title="Image Colorization"
@@ -80,49 +78,3 @@ if uploadFile is not None:
             st.success("Done!")
 
 ###################################################3
-
-# If not upload, choose an image in our test images:
-st.markdown("### Choose a B&W Picture from our small collection:")
-
-
-if platform == "Win32":
-    img_folder = "colorizer\Test"
-else:
-    img_folder = "colorizer/Test"
-
-def load_img_from_folder(folder):
-    imgs = []
-    imgs_path = []
-    for filename in os.listdir(folder):
-        img = cv2.imread(os.path.join(folder,filename))
-        if img is not None: imgs.append(img)
-        imgs_path.append(os.path.join(folder,filename))
-    return imgs_path, imgs
-    
-
-image_paths, images = load_img_from_folder(img_folder)
-st.image([img for img in images])
-
-# i = st.number_input(label="Choose a test picture number:", min_value=1, value=1, step=1)
-i = st.text_input(label='Enter a tester number (from 1 to 10): ')
-if i:
-    try: i = int(i)
-    except ValueError: print("Try an integer number from 1-10")
-
-    img2 = Image.open(image_paths[i-1])
-    st.image(np.array(img2))
-
-    start_analyze_test_file = st.button('Test Colorize', key='2')
-
-    if start_analyze_test_file == True:
-        with st.spinner(text = 'Colorizing...'):
-            load_model()
-            input_buffer = BytesIO()
-            output_buffer = BytesIO()
-            img2.save(input_buffer, 'JPEG')
-            input_img = evaluate_input(input_buffer)
-            input_img.save(output_buffer, format='JPEG')
-            output_img = Image.open(output_buffer)
-            color = np.array(output_img)
-            st.image(color)
-            st.success("Done!")
