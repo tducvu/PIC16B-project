@@ -1,39 +1,37 @@
 # PIC16B Project - Colorization of Black and White Photos
 
-#### The main requirement file/ folder for the project:
+#### The main file requirement file for the project:
 
-| File/Folder      | Description |
-|---------------- | ----------- |
-| models           | Pretrained models to run colorization|
-|support.py        | contains `create_inception_embedding`, and `load_pretrained_model()` function, support for **serving.py** file|
-| serving.py       | contains `load_model()`, `evaluate_input()`, and `_data_preprocessing` function, serves main **colorizeApp.py** file|
-| requirements.txt | The required libraries with version to run file colorizeApp.py|
-| .streamlit      | folder that contains hidden config.toml of streamlit, the config can be show using `$streamlit config show`|
-| Colorizer      | contain **Test** folder with tester B&W images for the app |
+|Folder/File       | Description |
+|------------------| ----------- |
+|requirements.txt  | The required libraries with version to run file colorizeApp.py|
+| Webapp/colorizeApp.py | Main file for `streamlit`|
+| Webapp/support.py     | contains `create_inception_embedding`, and `load_pretrained_model()` function, support for **serving.py** file|
+|  Webapp/serving.py    | contains `load_model()`, `evaluate_input()`, and `_data_preprocessing` function, serves main **colorizeApp.py** file|
+| models                | Pretrained models to run colorization|
+| colorizer/Test        | Tester B&W images for the app |
+|        
+| .streamlit            | Contains hidden config.toml of streamlit, the config can be show using `$streamlit config show`|
 
 
 
-
-#### Extra file for styling:
+#### Extra file for styling inside Webapp folder:
 
 | File/Folder | Description |
 |-------------|-------------|
-|style.scss   | added scss style for streamlit app|
-|load_css.py  | function `local_scss()` load scss to markdown in `st.markdown()`, to be called in colorizeApp.py|
+|Webapp/style.scss   | added scss style for streamlit app|
+|Webapp/load_css.py  | function `local_scss()` load scss to markdown in `st.markdown()`, to be called in colorizeApp.py|
 
 
 #### File to assist deploying streamlit app to heroku:
 
 | File/Folder | Description |
 |-------------|-------------|
-| runtime.txt       | The required version of Python = 3.6.13|
+| runtime.txt | The required version of Python = 3.6.13|
 | setup.sh | setup port for heroku using `config.toml` from **.streamlit** folder|
 | Procfile | heroku special file indicate `web: sh setup.sh && streamlit run colorizeApp.py`|
 | Aptfile | contains support file for openCV library need for deploy|
 | .slugignore | reduce app size by ignore unecessary file in repository|
-
-
-
 
 
 
