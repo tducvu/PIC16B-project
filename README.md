@@ -16,7 +16,7 @@
 
 #### Extra file for styling inside Webapp folder:
 
-| File/Folder | Description |
+| Folder/File | Description |
 |-------------|-------------|
 |Webapp/style.scss   | added scss style for streamlit app|
 |Webapp/load_css.py  | function `local_scss()` load scss to markdown in `st.markdown()`, to be called in colorizeApp.py|
@@ -24,7 +24,7 @@
 
 #### File to assist deploying streamlit app to heroku:
 
-| File/Folder | Description |
+| Folder/File | Description |
 |-------------|-------------|
 | runtime.txt | The required version of Python = 3.6.13|
 | setup.sh | setup port for heroku using `config.toml` from **.streamlit** folder|
