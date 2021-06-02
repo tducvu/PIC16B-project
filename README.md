@@ -1,70 +1,70 @@
-# PIC16B Project - Colorization of Black and White Photos
+## Colorization of Black and White Images ([WebApp](https://colorizing-pic16b.herokuapp.com/) - In Progress)
 
-#### The main file requirement file for the project:
+###  [Alice Pham](https://naliph.github.io/), [Duc Vu](https://tducvu.github.io/)
 
-|Folder/File       | Description |
+<img src='../demo.gif' width=650>
+
+For this project, we implement a convolutional neural network combined with a classifier to colorize greyscale images. As we only have access to some certain (free) resources, especially on computing power, e.g., limited access time to GPU, our model is in no way completed/perfect; it still has many flaws and needed to be trained more aggressively. For the upcoming sections, we will first describe the **file structure** of our repository. Then, we would get into the **prerequisites** and **installation** of the colorizing app. Lastly, we will discuss some of the limitation and challenges that we face throughout this project.
+
+### Repository Structure
+
+|Folder            | Description |
 |------------------| ----------- |
-|requirements.txt  | The required libraries with version to run file colorizeApp.py|
-| Webapp/colorizeApp.py | Main file for `streamlit`|
-| Webapp/support.py     | contains `create_inception_embedding`, and `load_pretrained_model()` function, support for **serving.py** file|
-|  Webapp/serving.py    | contains `load_model()`, `evaluate_input()`, and `_data_preprocessing` function, serves main **colorizeApp.py** file|
-| models                | Pretrained models to run colorization|
-| colorizer/Test        | Tester B&W images for the app |
-| .streamlit            | Contains hidden config.toml of streamlit, the config can be show using `$streamlit config show`|
+|`Webapp/`         | contains all the `.py` files which are needed to deploy the `streamlit` app|
+|`models/`         | pre-trained models which would be loaded to the app to colorize images|
+|`colorizer/`      | Jupyter Notebook [(colorizer.ipynb)](https://github.com/tducvu/PIC16B-project/blob/main/Colorizer/colorizer.ipynb) used to implement and train the model|
+|`Data/`           | data sources used to train the model on|
 
 
+**Some additional files needed to deploy heroku**:
 
-#### Extra file for styling inside Webapp folder:
-
-| Folder/File | Description |
-|-------------|-------------|
-|Webapp/style.scss   | added scss style for streamlit app|
-|Webapp/load_css.py  | function `local_scss()` load scss to markdown in `st.markdown()`, to be called in colorizeApp.py|
-
-
-#### File to assist deploying streamlit app to heroku:
-
-| Folder/File | Description |
-|-------------|-------------|
-| runtime.txt | The required version of Python = 3.6.13|
-| setup.sh | setup port for heroku using `config.toml` from **.streamlit** folder|
-| Procfile | heroku special file indicate `web: sh setup.sh && streamlit run colorizeApp.py`|
-| Aptfile | contains support file for openCV library need for deploy|
-| .slugignore | reduce app size by ignore unecessary file in repository|
+| File              | Description |
+|-------------------|-------------|
+|`runtime.txt`      | the required version of **Python**|
+|`requirements.txt` | the required and specified version packages needed to run [colorizeApp.py](https://github.com/tducvu/PIC16B-project/blob/main/Webapp/colorizeApp.py)|
+|`setup.sh`         | setup port to deploy **heroku** webapp|
+|`Procfile`         | **heroku** special file indicate how to set up and run the source code|
 
 
+### Installation
 
+1. **Prerequisites**
+-  Since this app needs to be ran on some specific versions of some packages, we recommend to install [conda](https://conda.io/projects/conda/en/latest/user-guide/getting-started.html) to run the app on a virtual environment which reduces the risk of breaking your base environment.
+- GPU or any platforms such as [Google Colab](https://research.google.com/colaboratory/) and [FloydHub](https://www.floydhub.com/) that give you free access to limited GPU computing power (only applicable if you want to train your own model on [colorizer.ipynb](https://github.com/tducvu/PIC16B-project/blob/main/Colorizer/colorizer.ipynb).
 
-## Tutorial for colorization:
-First of all, fork this repository :) <br>
+2. **Getting Started**
+- After installing **conda**, run the following commands in a terminal to create a new environment
 
-Since we use an older version of Python and of some libraries, you will need to create another environment. Suggesting download Conda starting from the very beginning ([conda docs](https://conda.io/projects/conda/en/latest/user-guide/getting-started.html))
-
-After having conda in path, let's get start!
-
-1. Create new environment that host these libraries with Python version 3.6, activate it and install packages as requirements.txt indicate:
-``` 
-$ conda create -n colorizer python 3.6
-$ conda activate colorizer
-$ conda install --file requirements.txt
+```bash
+conda create -n colorizer python=3.6
+conda activate colorizer
+conda install --file requirements.txt
 ```
 
-2. Go to the repository folder, and run the streamlit command:
+- Next, let's clone this repository and change our current working directory.
+
+```bash
+git clone https://github.com/tducvu/PIC16B-project.git
+cd PIC16B-project
 ```
-$ streamlit run colorizeApp.py
 
+- Now, to simply test out our app, just execute the following commands
+
+```bash
+cd Webapp
+streamlit run colorizeApp.py
 ```
 
+- Otherwise, to build and train your own model, please take a look and follow the instruction in [colorizer.ipynb](https://github.com/tducvu/PIC16B-project/blob/main/Colorizer/colorizer.ipynb).
 
-3. Done, you can play around with the local app, add some B&W picture and see some color!
-The streamlit contains 2 method of colorization: upload your own B&W pictures, or use the 10 tester images that we provide in the app. Any case, the localhost app may run slow due to loading heavy pretrained model.
+3. **Note**: 
 
+Our local app takes quite a noticeable amount of time to run which is due to the loading of a pre-trained model and a rather heavy and powerful classifier - [InceptionResNetV2](https://keras.io/api/applications/inceptionresnetv2/).
 
-## Limitation
-Since we can only train at most on 10,000 images and little epochs number due to lack of a strong processing core, the colorization images does not work perfectly and not as sharp as we want it to be (but, it can make your B&W pictures looks very artistic-ish :D ). 
+### Limitation & Improvement
+Since we can only train at most on 10,000 images and a relatively small number of epochs due to the lack of a strong processing core, the colorized image does not appear to be very polished, convincing and as sharp as we want it to be (nevertheless, it can make your B&W pictures looks very artistic-ish :D ). Undoubtedly, with more time and computing power, we can train our model on more images and epochs which can potentially increases the sensitivity and "aesthetic" of the model.
 
-The **colorizer** folder contains the colorizer.ipynb file, which include explanation and our code with convolutional neural network training process.
-There is a choice to retrain the model with a stronger GPU if you want to for a better colorization model.
+Moreover, because of the heavy model and long runtime to colorize, the option to run this app on **heroku** is still currently in progress (connection timeout error). In addition, this is our first time using **heroku**, and we just figured out recently that it's not a suitable platform to deploy machine learning models as they tend to be very resource-hungry/intensive (which ours is). Thus, more research need to be done here to find a more appropriate host for the webapp.
 
-
-Moreover, currently, due to the heavy model and long runtime to colorize, the option to deploy to heroku app is unavailable and it's not the best choice to upload a data science project. In the future, we can research more about methods to deploy the web app with a better colorization model.
+### Source
+The algorithm implemented in [colorizer.ipynb](https://github.com/tducvu/PIC16B-project/blob/main/Colorizer/colorizer.ipynb) is from [Emil's](https://www.emilwallner.com/) blog post on colorization which is posted on [medium](https://emilwallner.medium.com/colorize-b-w-photos-with-a-100-line-neural-network-53d9b4449f8d). We're very grateful for his amazing and eye-opening work. Please visit the site for more detailed and thorough explanation of the colorizing process.
