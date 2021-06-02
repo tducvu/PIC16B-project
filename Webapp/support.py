@@ -1,5 +1,6 @@
 # import necessary packages for CNN and image preprocessing
 import numpy as np
+import matplotlib.pyplot as plt
 
 from keras.applications.inception_resnet_v2 import InceptionResNetV2
 from keras.applications.inception_resnet_v2 import preprocess_input
@@ -18,6 +19,9 @@ from keras.layers import (
 from skimage.color import rgb2lab, lab2rgb, rgb2gray, gray2rgb
 from skimage.transform import resize
 from skimage.io import imsave
+
+import requests
+import os
 
 import tensorflow as tf
 
@@ -87,3 +91,73 @@ def load_pretrained_model(inception_wpath, colornet_wpath):
 
     print('Model loaded!')
     return(model, inception)
+
+def read_img(img_id, data_dir, train_or_test, size):
+    """
+    Function: read and resize image.
+    Input:
+        img_id: string
+        train_or_test: string 'train' or 'test'.
+        size: resize the original image.
+    Output:
+        Image as numpy array.
+    """
+    img = image.load_img(os.path.join(data_dir, train_or_test, '%s.jpg' % img_id), target_size=size)
+    img = image.img_to_array(img)
+    return img
+
+def prediction_from_url(url, model, inception):
+    """
+    Colorize an image inputted from an url (either grayscale or color)
+    and display the original, grayscale, and predicted version
+    """
+    test_image_path = '/tmp/test.jpg'
+
+    # Download the image
+    response = requests.get(url)
+    if response.status_code == 200:
+        with open(test_image_path, 'wb') as f:
+            f.write(response.content)
+
+    color_me = []
+    color_me.append(read_img('test', '/', 'tmp', (256, 256)))
+
+    #################
+    # Preprocessing #
+    #################
+    # From RGB to B&W and embedding
+    color_me = np.array(color_me, dtype=float)
+    color_me_embed = create_inception_embedding(inception, gray2rgb(rgb2gray(1.0/255*color_me)))
+    color_me = rgb2lab(1.0/255*color_me)[:, :, :, 0]
+    color_me = color_me.reshape(color_me.shape+(1,))
+
+    # Test model
+    output = model.predict([color_me, color_me_embed])
+    # Rescale the output from [-1,1] to [-128, 128]
+    output = output * 128
+
+    # Output colorizations
+    for i in range(len(output)):
+        cur = np.zeros((256, 256, 3))
+        # LAB representation
+        cur[:, :, 0] = color_me[i][:, :, 0]
+        cur[:, :, 1:] = output[i]
+
+    # B&W
+    fig = plt.figure(figsize=(9, 9))
+    ax1 = fig.add_subplot(1, 3, 1)
+    ax1.axis('off')
+    ax1.set_title('B&W')
+    ax1.imshow(rgb2gray(read_img('test', '/', 'tmp', (256, 256))/255), cmap='gray')
+
+    # Prediction
+    ax2 = fig.add_subplot(1, 3, 2)
+    ax2.axis('off')
+    ax2.set_title('Prediction')
+    ax2.imshow(lab2rgb(cur))
+
+    # Original
+    ax3 = fig.add_subplot(1, 3, 3)
+    ax3.axis('off')
+    ax3.set_title('Original')
+    ax3.imshow(read_img('test', '/', 'tmp', (256, 256))/255)
