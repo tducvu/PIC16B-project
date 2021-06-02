@@ -10,7 +10,6 @@
 |  Webapp/serving.py    | contains `load_model()`, `evaluate_input()`, and `_data_preprocessing` function, serves main **colorizeApp.py** file|
 | models                | Pretrained models to run colorization|
 | colorizer/Test        | Tester B&W images for the app |
-|        
 | .streamlit            | Contains hidden config.toml of streamlit, the config can be show using `$streamlit config show`|
 
 
