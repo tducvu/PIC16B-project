@@ -2,7 +2,7 @@
 
 ###  [Alice Pham](https://naliph.github.io/), [Duc Vu](https://tducvu.github.io/)
 
-<img src='demo.gif' width=800>
+<img src='demo2.gif' width=800>
 
 For this project, we implement a convolutional neural network combined with a classifier to colorize greyscale images. As we only have access to some certain (free) resources, especially on computing power, e.g., limited access time to GPU, our model is in no way completed/perfect; it still has many flaws and needed to be trained more aggressively. For the upcoming sections, we will first describe the **file structure** of our repository. Then, we would get into the **prerequisites** and **installation** of the colorizing app. Lastly, we will discuss some of the limitation and challenges that we face throughout this project.
 
